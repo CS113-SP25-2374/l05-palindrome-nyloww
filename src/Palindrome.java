@@ -12,6 +12,36 @@ public class Palindrome {
      * @return true if they are the same
      */
     public boolean isPalindrome(String s) {
-        return true;
+        s = s.replaceAll("[^A-Za-z]", "").toLowerCase();
+
+        ArrayListStack<Character> original = new ArrayListStack<>();
+        for (char c : s.toCharArray()) {
+            original.push(c);
+        }
+
+        ArrayListStack<Character> firstHalf = new ArrayListStack<>();
+        ArrayListStack<Character> secondHalf = new ArrayListStack<>();
+
+        int len = s.length();
+
+        for (int i = 0; i < len / 2; i++) {
+            secondHalf.push(original.pop());
+        }
+
+        if (len % 2 != 0) {
+            original.pop();
+        }
+
+        while (!original.empty()) {
+            firstHalf.push(original.pop());
+        }
+
+        while (!firstHalf.empty() && !secondHalf.empty()) {
+            if (firstHalf.pop().equals(secondHalf.pop())) {
+                return true;
+            }
+        }
+        return false;
     }
+
 }
